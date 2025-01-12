@@ -1,0 +1,46 @@
+Approach:
+
+Use a queue to perform a level-order traversal (BFS).
+Traverse each level of the tree from left to right.
+Keep track of the first value in each level since it will be the leftmost value.
+At the end of the traversal, the last updated value will be the leftmost value in the last row.
+
+
+Key Observations:
+
+BFS ensures that we visit nodes level by level.
+
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        queue<TreeNode*> q; // Queue for BFS
+        q.push(root);
+        int leftmostValue = root->val; // Initialize with root value
+
+        while (!q.empty()) {
+            int levelSize = q.size(); // Number of nodes at the current level
+
+            // Iterate through all nodes at the current level
+            for (int i = 0; i < levelSize; ++i) {
+                TreeNode* current = q.front();
+                q.pop();
+
+                // Update leftmostValue for the first node of the level
+                if (i == 0) {
+                    leftmostValue = current->val;
+                }
+
+                // Add child nodes to the queue for the next level
+                if (current->left) {
+                    q.push(current->left);
+                }
+                if (current->right) {
+                    q.push(current->right);
+                }
+            }
+        }
+
+        return leftmostValue; // Return the leftmost value in the last row
+    }
+};
+
