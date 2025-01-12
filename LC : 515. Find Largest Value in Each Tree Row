@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> largestValues(TreeNode* root) {
+        vector<int> result;
+        if (root == nullptr) return result; // Handle empty tree case
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        
+        while (!q.empty()) {
+            int levelSize = q.size(); // Number of nodes at the current level
+            int maxVal = INT_MIN;     // Initialize max value for this level
+            
+            for (int i = 0; i < levelSize; ++i) {
+                TreeNode* current = q.front();
+                q.pop();
+                
+                // Update max value for this level
+                maxVal = max(maxVal, current->val);
+                
+                // Add child nodes to the queue for the next level
+                if (current->left) {
+                    q.push(current->left);
+                }
+                if (current->right) {
+                    q.push(current->right);
+                }
+            }
+            
+            // Add the max value of this level to the result
+            result.push_back(maxVal);
+        }
+        
+        return result;
+    }
+};
