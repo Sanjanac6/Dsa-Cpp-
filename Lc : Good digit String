@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+const int MOD = 1e9 + 7;
+
+int countGoodDigitStrings(int n) {
+    // Number of valid digits for even indices (0, 2, 4, 6, 8)
+    int evenCount = 5;
+    // Number of valid digits for odd indices (2, 3, 5, 7)
+    int primeCount = 4;
+
+    long long totalEven = 1;
+    long long totalOdd = 1;
+
+    // Calculate the powers of valid digits for even and odd indices
+    for (int i = 0; i < (n + 1) / 2; i++) {
+        totalEven = (totalEven * evenCount) % MOD;
+    }
+    for (int i = 0; i < n / 2; i++) {
+        totalOdd = (totalOdd * primeCount) % MOD;
+    }
+
+    // Total number of good digit strings
+    return (totalEven * totalOdd) % MOD;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    cout << countGoodDigitStrings(n) << endl;
+    return 0;
+}
