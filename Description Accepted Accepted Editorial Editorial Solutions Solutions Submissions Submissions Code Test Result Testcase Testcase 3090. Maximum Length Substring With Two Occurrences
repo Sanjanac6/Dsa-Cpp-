@@ -1,0 +1,36 @@
+#include <iostream>
+#include <unordered_map>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int longestSubstring(string s) {
+    int start = 0, max_length = 0;
+    unordered_map<char, int> char_count;
+    
+    for (int end = 0; end < s.size(); ++end) {
+        // Increase the count of the character at `end`
+        char_count[s[end]]++;
+        
+        // If a character appears more than twice, shrink the window
+        while (char_count[s[end]] > 2) {
+            char_count[s[start]]--;
+            start++;
+        }
+        
+        // Calculate the length of the current valid window
+        max_length = max(max_length, end - start + 1);
+    }
+    
+    return max_length;
+}
+
+int main() {
+    string s1 = "bcbbbcba";
+    string s2 = "aaaa";
+    
+    cout << "Example 1: " << longestSubstring(s1) << endl;  // Output: 4
+    cout << "Example 2: " << longestSubstring(s2) << endl;  // Output: 2
+    
+    return 0;
+}
